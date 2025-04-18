@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * @author John Spangenberg
+ */
 @Entity
 public class Book {
 
