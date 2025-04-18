@@ -4,8 +4,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import space.springbok.spring6webapp.domain.Author;
 import space.springbok.spring6webapp.domain.Book;
+import space.springbok.spring6webapp.domain.Publisher;
 import space.springbok.spring6webapp.repositories.AuthorRepository;
 import space.springbok.spring6webapp.repositories.BookRepository;
+import space.springbok.spring6webapp.repositories.PublisherRepository;
 
 /**
  * @author John Spangenberg
@@ -17,9 +19,12 @@ public class BootstrapData implements CommandLineRunner {
 
     private final BookRepository bookRepository;
 
-    public BootstrapData(AuthorRepository authorRepository, BookRepository bookRepository) {
+    private final PublisherRepository publisherRepository;
+
+    public BootstrapData(AuthorRepository authorRepository, BookRepository bookRepository, PublisherRepository publisherRepository) {
         this.authorRepository = authorRepository;
         this.bookRepository = bookRepository;
+        this.publisherRepository = publisherRepository;
     }
 
     @Override
@@ -53,8 +58,18 @@ public class BootstrapData implements CommandLineRunner {
         authorRepository.save(ericSaved);
         authorRepository.save(rodSaved);
 
+        Publisher publisher = new Publisher();
+        publisher.setPublisherName("My Publisher");
+        publisher.setAddress("123 Main St");
+        publisher.setCity("My City");
+        publisher.setState("My State");
+        publisher.setZip("12345");
+
+        Publisher savedPublisher = publisherRepository.save(publisher);
+
         System.out.println("In Bootstrap");
         System.out.println("Author Count: " + authorRepository.count());
         System.out.println("Book Count: " + bookRepository.count());
+        System.out.println("Publisher Count: " + publisherRepository.count());
     }
 }
